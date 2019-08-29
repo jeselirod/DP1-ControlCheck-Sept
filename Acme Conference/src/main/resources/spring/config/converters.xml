@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+ * converters.xml
+ *
+ * Copyright (C) 2018 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd		
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd		
+	">
+
+	<util:list id="converters">
+		<!-- 
+			Add your own converters using entries of the following form: 
+			<bean class="converters.Class1ToClass2" /> 
+		-->
+		<bean class="converters.StringToActorConverter" />
+		<bean class="converters.ActorToStringConverter" />
+		
+		<bean class="converters.StringToTopicConverter" />
+		<bean class="converters.TopicToStringConverter" />
+		
+		<bean class="converters.StringToAuthorityConverter" />
+		<bean class="converters.AuthorityToStringConverter" />
+		
+		<bean class="converters.StringToAdministratorConverter" />
+		<bean class="converters.AdministratorToStringConverter" />
+		
+		<bean class="converters.StringToSubmissionConverter" />
+		<bean class="converters.SubmissionToStringConverter" />
+		
+		<bean class="converters.StringToConferenceConverter" />
+		<bean class="converters.ConferenceToStringConverter" />
+		
+		<bean class="converters.StringToReviwerConverter" />
+		<bean class="converters.ReviwerToStringConverter" />
+		
+		<bean class="converters.StringToAuthorConverter" />
+		<bean class="converters.AuthorToStringConverter" />
+		
+		<bean class="converters.StringToActivityConverter" />
+		<bean class="converters.ActivityToStringConverter" />
+		
+		<bean class="converters.StringToPresentationConverter" />
+		<bean class="converters.PresentationToStringConverter" />
+		
+		<bean class="converters.StringToPanelConverter" />
+		<bean class="converters.PanelToStringConverter" />
+		
+		<bean class="converters.StringToTutorialConverter" />
+		<bean class="converters.TutorialToStringConverter" />
+		
+		<bean class="converters.StringToPictureConverter" />
+		<bean class="converters.PictureToStringConverter" />
+		
+		<bean class="converters.StringToSectionConverter" />
+		<bean class="converters.SectionToStringConverter" />
+		
+				
+		<bean class="converters.StringToRegistrationConverter" />
+		<bean class="converters.RegistrationToStringConverter" />
+		
+		<bean class="converters.StringToCreditCardConverter" />
+		<bean class="converters.CreditCardToStringConverter" />
+		
+		<bean class="converters.StringToCameraReadyConverter" />
+		<bean class="converters.CameraReadyToStringConverter" />
+	</util:list>
+	
+</beans>
