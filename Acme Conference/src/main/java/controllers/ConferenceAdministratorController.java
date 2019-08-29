@@ -13,11 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import security.LoginService;
-import security.UserAccount;
-import services.ActorService;
 import services.ConferenceService;
-import domain.Actor;
 import domain.Conference;
 
 @Controller
@@ -27,18 +23,12 @@ public class ConferenceAdministratorController extends AbstractController {
 	@Autowired
 	private ConferenceService	conferenceService;
 
-	@Autowired
-	private ActorService		actorService;
-
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 		final ModelAndView result;
 
-		final UserAccount user = LoginService.getPrincipal();
-		final Actor a = this.actorService.getActorByUserAccount(user.getId());
-
-		final Collection<Conference> conferences = this.conferenceService.getConferencesByAdmin(a.getId());
+		final Collection<Conference> conferences = this.conferenceService.findAll();
 
 		final String lang = LocaleContextHolder.getLocale().getLanguage();
 
@@ -55,12 +45,7 @@ public class ConferenceAdministratorController extends AbstractController {
 
 		try {
 			final Conference conference = this.conferenceService.findOne(idConference);
-			if (conference.getFinalMode() == 0) {
-				final UserAccount user = LoginService.getPrincipal();
-				final Actor a = this.actorService.getActorByUserAccount(user.getId());
-				Assert.isTrue(conference.getAdmin().equals(a));
-			}
-
+			Assert.notNull(conference);
 			final String lang = LocaleContextHolder.getLocale().getLanguage();
 			result = new ModelAndView("conference/show");
 			result.addObject("conference", conference);
@@ -89,9 +74,7 @@ public class ConferenceAdministratorController extends AbstractController {
 		try {
 			final Conference conference = this.conferenceService.findOne(idConference);
 			Assert.isTrue(conference.getFinalMode() == 0);
-			final UserAccount user = LoginService.getPrincipal();
-			final Actor a = this.actorService.getActorByUserAccount(user.getId());
-			Assert.isTrue(conference.getAdmin() == a);
+			Assert.notNull(conference);
 			result = new ModelAndView("conference/edit");
 			result.addObject("conference", conference);
 		} catch (final Exception e) {
