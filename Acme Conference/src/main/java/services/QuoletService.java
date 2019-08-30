@@ -16,6 +16,8 @@ import org.springframework.validation.Validator;
 import repositories.QuoletRepository;
 import security.LoginService;
 import security.UserAccount;
+import domain.Actor;
+import domain.Administrator;
 import domain.Conference;
 import domain.Quolet;
 
@@ -25,6 +27,8 @@ public class QuoletService {
 
 	@Autowired
 	private QuoletRepository	quoletRepository;
+	@Autowired
+	private ActorService		actorService;
 	@Autowired
 	private Validator			validator;
 
@@ -40,6 +44,7 @@ public class QuoletService {
 		res.setNumMonth(null);
 		res.setPicture("");
 		res.setXxxx("");
+		res.setAdmin(new Administrator());
 
 		return res;
 	}
@@ -63,7 +68,8 @@ public class QuoletService {
 
 		//COMPROBAMOS QUE EL ACTOR LOGEADO ES UN ADMIN
 		final UserAccount user = LoginService.getPrincipal();
-		Assert.isTrue(user.getAuthorities().iterator().next().getAuthority().equals("ADMIN"));
+		final Actor a = this.actorService.getActorByUserAccount(user.getId());
+		Assert.isTrue(a.equals(q.getAdmin()));
 
 		res = this.quoletRepository.save(q);
 
@@ -74,7 +80,8 @@ public class QuoletService {
 	public void delete(final Quolet q) {
 		Assert.isTrue(q.getDraftMode() == 0);
 		final UserAccount user = LoginService.getPrincipal();
-		Assert.isTrue(user.getAuthorities().iterator().next().getAuthority().equals("ADMIN"));
+		final Actor a = this.actorService.getActorByUserAccount(user.getId());
+		Assert.isTrue(a.equals(q.getAdmin()));
 
 		this.quoletRepository.delete(q);
 
@@ -83,9 +90,13 @@ public class QuoletService {
 	public Quolet reconstruct(final Quolet quolet, final BindingResult binding) {
 		Quolet res;
 
+		final UserAccount user = LoginService.getPrincipal();
+		final Actor a = this.actorService.getActorByUserAccount(user.getId());
+
 		if (quolet.getId() == 0) {
 			res = quolet;
 
+			res.setAdmin((Administrator) a);
 			res.setTicker(this.generarTicker());
 			res.setPublicationMoment(null);
 			res.setNumMonth(null);
@@ -94,6 +105,9 @@ public class QuoletService {
 				res.setPublicationMoment(this.fechaPasado());
 				res.setNumMonth(this.getMonths(res));
 			}
+
+			if (res.getConference().getFinalMode() == 0 || !(res.getConference().getAdmin().equals(a)))
+				binding.rejectValue("conference", "ConferenceNoValid");
 
 			this.validator.validate(res, binding);
 			return res;
@@ -105,6 +119,7 @@ public class QuoletService {
 			copy.setTicker(res.getTicker());
 			copy.setPublicationMoment(res.getPublicationMoment());
 			copy.setNumMonth(quolet.getNumMonth());
+			copy.setAdmin(res.getAdmin());
 
 			copy.setConference(quolet.getConference());
 			copy.setDraftMode(quolet.getDraftMode());
@@ -116,6 +131,9 @@ public class QuoletService {
 				res.setPublicationMoment(this.fechaPasado());
 				res.setNumMonth(this.getMonths(res));
 			}
+
+			if (res.getConference().getFinalMode() == 0 || !(res.getConference().getAdmin().equals(a)))
+				binding.rejectValue("conference", "ConferenceNoValid");
 
 			this.validator.validate(copy, binding);
 

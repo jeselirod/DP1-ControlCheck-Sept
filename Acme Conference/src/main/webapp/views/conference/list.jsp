@@ -70,10 +70,10 @@ requestURI="conference/administrator/list.do" >
 
 <input type="button" name="create" value="<spring:message code="conference.create" />"
 			onclick="javascript: relativeRedir('conference/administrator/create.do');" />
-			
-<input type="button" name="create" value="<spring:message code="conference.quolet.create" />"
-			onclick="javascript: relativeRedir('quolet/administrator/create.do');" />			
 </security:authorize>
+
+<input type="button" name="create" value="<spring:message code="conference.quolet.create" />"
+			onclick="javascript: relativeRedir('quolet/administrator/create.do');" />	
 
 <security:authorize access="isAnonymous()">
 

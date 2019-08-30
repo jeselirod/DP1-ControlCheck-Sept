@@ -42,6 +42,7 @@
 		<value>/views/panel/tiles.xml</value>
 		<value>/views/presentation/tiles.xml</value>
 		<value>/views/quolet/tiles.xml</value>
+		
 	</util:list>
 
 </beans>

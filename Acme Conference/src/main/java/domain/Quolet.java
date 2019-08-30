@@ -27,14 +27,15 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Access(AccessType.PROPERTY)
 public class Quolet extends DomainEntity {
 
-	private Conference	conference;
-	private String		ticker;
-	private Date		publicationMoment;
-	private int			draftMode;
-	private String		body;
-	private Integer		numMonth;
-	private String		picture;
-	private String		xxxx;
+	private Conference		conference;
+	private String			ticker;
+	private Date			publicationMoment;
+	private int				draftMode;
+	private String			body;
+	private Integer			numMonth;
+	private String			picture;
+	private String			xxxx;
+	private Administrator	admin;
 
 
 	@NotBlank
@@ -123,6 +124,17 @@ public class Quolet extends DomainEntity {
 
 	public void setPicture(final String picture) {
 		this.picture = picture;
+	}
+
+	@ManyToOne(optional = false)
+	@Valid
+	@NotNull
+	public Administrator getAdmin() {
+		return this.admin;
+	}
+
+	public void setAdmin(final Administrator admin) {
+		this.admin = admin;
 	}
 
 }

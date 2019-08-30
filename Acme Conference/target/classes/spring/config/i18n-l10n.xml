@@ -41,7 +41,6 @@
 		<value>/views/panel/messages</value>
 		<value>/views/presentation/messages</value>
 		<value>/views/quolet/messages</value>
-		
 	</util:list>
 
 </beans>

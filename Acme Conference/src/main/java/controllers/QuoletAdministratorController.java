@@ -10,8 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import security.LoginService;
+import security.UserAccount;
+import services.ActorService;
 import services.ConferenceService;
 import services.QuoletService;
+import domain.Actor;
 import domain.Conference;
 import domain.Quolet;
 
@@ -25,13 +29,19 @@ public class QuoletAdministratorController {
 	@Autowired
 	private ConferenceService	conferenceService;
 
+	@Autowired
+	private ActorService		actorService;
+
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		final ModelAndView result;
 
 		final Quolet quolet = this.quoletService.create();
-		final Collection<Conference> conferences = this.conferenceService.getConferencesInSaveMode();
+
+		final UserAccount user = LoginService.getPrincipal();
+		final Actor a = this.actorService.getActorByUserAccount(user.getId());
+		final Collection<Conference> conferences = this.conferenceService.getConferecesInFinalModeByAdmin(a.getId());
 
 		result = new ModelAndView("quolet/edit");
 		result.addObject("quolet", quolet);
@@ -49,13 +59,17 @@ public class QuoletAdministratorController {
 				this.quoletService.save(q);
 				result = new ModelAndView("redirect:../../conference/administrator/list.do");
 			} else {
-				final Collection<Conference> conferences = this.conferenceService.getConferencesInSaveMode();
+				final UserAccount user = LoginService.getPrincipal();
+				final Actor a = this.actorService.getActorByUserAccount(user.getId());
+				final Collection<Conference> conferences = this.conferenceService.getConferecesInFinalModeByAdmin(a.getId());
 				result = new ModelAndView("quolet/edit");
 				result.addObject("quolet", quolet);
 				result.addObject("conferences", conferences);
 			}
 		} catch (final Exception e) {
-			final Collection<Conference> conferences = this.conferenceService.getConferencesInSaveMode();
+			final UserAccount user = LoginService.getPrincipal();
+			final Actor a = this.actorService.getActorByUserAccount(user.getId());
+			final Collection<Conference> conferences = this.conferenceService.getConferecesInFinalModeByAdmin(a.getId());
 			result = new ModelAndView("quolet/edit");
 			result.addObject("quolet", quolet);
 			result.addObject("conferences", conferences);
