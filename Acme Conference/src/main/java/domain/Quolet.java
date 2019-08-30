@@ -19,6 +19,7 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
+import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -38,6 +39,7 @@ public class Quolet extends DomainEntity {
 
 	@NotBlank
 	@NotNull
+	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
 	public String getXxxx() {
 		return this.xxxx;
 	}
@@ -61,6 +63,7 @@ public class Quolet extends DomainEntity {
 	@NotBlank
 	@Pattern(regexp = "^[A-z]{4}\\-[0-9]{6}$")
 	@Column(unique = true)
+	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
 	public String getTicker() {
 		return this.ticker;
 	}
@@ -92,6 +95,7 @@ public class Quolet extends DomainEntity {
 	@NotNull
 	@NotBlank
 	@Length(max = 100)
+	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
 	public String getBody() {
 		return this.body;
 	}
@@ -112,6 +116,7 @@ public class Quolet extends DomainEntity {
 	@URL
 	@NotBlank
 	@NotNull
+	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
 	public String getPicture() {
 		return this.picture;
 	}

@@ -90,6 +90,11 @@ public class QuoletService {
 			res.setPublicationMoment(null);
 			res.setNumMonth(null);
 
+			if (res.getDraftMode() == 1) {
+				res.setPublicationMoment(this.fechaPasado());
+				res.setNumMonth(this.getMonths(res));
+			}
+
 			this.validator.validate(res, binding);
 			return res;
 
@@ -97,15 +102,20 @@ public class QuoletService {
 			res = this.quoletRepository.findOne(quolet.getId());
 			final Quolet copy = new Quolet();
 
-			copy.setConference(res.getConference());
 			copy.setTicker(res.getTicker());
 			copy.setPublicationMoment(res.getPublicationMoment());
 			copy.setNumMonth(quolet.getNumMonth());
 
+			copy.setConference(quolet.getConference());
 			copy.setDraftMode(quolet.getDraftMode());
 			copy.setBody(quolet.getBody());
 			copy.setPicture(quolet.getPicture());
 			copy.setXxxx(quolet.getXxxx());
+
+			if (res.getDraftMode() == 1) {
+				res.setPublicationMoment(this.fechaPasado());
+				res.setNumMonth(this.getMonths(res));
+			}
 
 			this.validator.validate(copy, binding);
 
