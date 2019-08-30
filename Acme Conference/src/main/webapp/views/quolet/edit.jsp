@@ -43,8 +43,10 @@
 		<input type="submit" name="save" 
 		value="<spring:message code="quolet.save" />" />
 
+	<jstl:if test="${quolet.id eq 0 }">
 		<input type="button" name="cancel" value="<spring:message code="quolet.cancel" />"
 				onclick="javascript: relativeRedir('conference/administrator/list.do');" />
+	</jstl:if>
 	</form:form>	
 	
 </security:authorize>
