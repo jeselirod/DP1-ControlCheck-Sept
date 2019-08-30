@@ -59,7 +59,7 @@ public class Quolet extends DomainEntity {
 
 	@NotNull
 	@NotBlank
-	@Pattern(regexp = "^[A-Z]{3}\\-[0-9A-Z]{4}$")
+	@Pattern(regexp = "^[A-z]{4}\\-[0-9]{6}$")
 	@Column(unique = true)
 	public String getTicker() {
 		return this.ticker;

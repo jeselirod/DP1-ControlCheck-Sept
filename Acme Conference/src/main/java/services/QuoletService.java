@@ -118,23 +118,28 @@ public class QuoletService {
 
 	//Generar ticker
 	public String generarTicker() {
-		final int tamLetras = 3;
+		String ticker = "";
+
 		final int tam = 4;
-		String d = "";
-		final String b = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-		for (int i = 0; i < tamLetras; i++) {
-			final Integer random = (int) (Math.floor(Math.random() * b.length()) % b.length());
-			d = d + b.charAt(random);
-		}
-
-		String ticker = d + "-";
-		final String a = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		final String a = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 		for (int i = 0; i < tam; i++) {
 			final Integer random = (int) (Math.floor(Math.random() * a.length()) % a.length());
 			ticker = ticker + a.charAt(random);
 		}
+		ticker = ticker + "-";
+
+		final Integer ano = new Date().getYear() + 1900;
+		final Integer mes = new Date().getMonth() + 1;
+		final Integer dia = new Date().getDate();
+
+		String day = dia.toString();
+		String month = mes.toString();
+		if (mes < 10)
+			month = "0" + mes.toString();
+		if (dia < 10)
+			day = "0" + dia.toString();
+		ticker = ticker + ano.toString().substring(ano.toString().length() - 2, ano.toString().length()) + month + day;
 
 		return ticker;
 	}

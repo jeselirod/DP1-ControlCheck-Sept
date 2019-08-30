@@ -1056,7 +1056,7 @@
 	<!-- Quolet -->
 	<bean id="quolet1" class="domain.Quolet">
 		<property name="conference" ref="conference1" />
-		<property name="ticker" value="ASD-1234" />
+		<property name="ticker" value="ASDs-123445" />
 		<property name="publicationMoment" value="07/19/2019 11:30" />
 		<property name="draftMode" value="1" />
 		<property name="body" value="Body quolet 1" />
@@ -1067,7 +1067,7 @@
 	
 	<bean id="quolet2" class="domain.Quolet">
 		<property name="conference" ref="conference1" />
-		<property name="ticker" value="VCD-1674" />
+		<property name="ticker" value="VCwD-167467" />
 		<property name="publicationMoment"><null/></property>
 		<property name="draftMode" value="0" />
 		<property name="body" value="Body quolet 2" />
@@ -1078,7 +1078,7 @@
 	
 	<bean id="quolet3" class="domain.Quolet">
 		<property name="conference" ref="conference1" />
-		<property name="ticker" value="VXD-1674" />
+		<property name="ticker" value="VXsD-167454" />
 		<property name="publicationMoment"><null/></property>
 		<property name="draftMode" value="0" />
 		<property name="body" value="Body quolet 3" />
@@ -1089,7 +1089,7 @@
 	
 	<bean id="quolet4" class="domain.Quolet">
 		<property name="conference" ref="conference2" />
-		<property name="ticker" value="VXT-1674" />
+		<property name="ticker" value="VXTT-167443" />
 		<property name="publicationMoment" value="04/21/2019 11:30" />
 		<property name="draftMode" value="0" />
 		<property name="body" value="Body quolet 4" />
