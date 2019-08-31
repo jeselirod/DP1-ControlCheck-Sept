@@ -45,7 +45,7 @@
 
 	<jstl:if test="${quolet.id eq 0 }">
 		<input type="button" name="cancel" value="<spring:message code="quolet.cancel" />"
-				onclick="javascript: relativeRedir('conference/administrator/list.do');" />
+				onclick="javascript: relativeRedir('quolet/administrator/list.do');" />
 	</jstl:if>
 	</form:form>	
 	

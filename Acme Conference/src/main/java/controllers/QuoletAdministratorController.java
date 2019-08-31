@@ -4,6 +4,7 @@ package controllers;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
@@ -47,9 +48,12 @@ public class QuoletAdministratorController {
 			final UserAccount user = LoginService.getPrincipal();
 			final Administrator admin = this.administratorService.getAdministratorByUserAccount(user.getId());
 			final Collection<Quolet> quolets = this.quoletService.getQuoletsByAdmin(admin.getId());
-			result = new ModelAndView("quolet/list");
 
+			final String lang = LocaleContextHolder.getLocale().getLanguage();
+
+			result = new ModelAndView("quolet/list");
 			result.addObject("quolets", quolets);
+			result.addObject("lang", lang);
 			return result;
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:../../");
@@ -66,9 +70,12 @@ public class QuoletAdministratorController {
 			Assert.notNull(conference);
 			Assert.notNull(quolet);
 
+			final String lang = LocaleContextHolder.getLocale().getLanguage();
+
 			result = new ModelAndView("quolet/show");
 			result.addObject("quolet", quolet);
 			result.addObject("conference", conference);
+			result.addObject("lang", lang);
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:list.do");
 		}
@@ -99,7 +106,7 @@ public class QuoletAdministratorController {
 			final Quolet q = this.quoletService.reconstruct(quolet, binding);
 			if (!binding.hasErrors()) {
 				this.quoletService.save(q);
-				result = new ModelAndView("redirect:../../conference/administrator/list.do");
+				result = new ModelAndView("redirect:list.do");
 			} else {
 				final UserAccount user = LoginService.getPrincipal();
 				final Actor a = this.actorService.getActorByUserAccount(user.getId());

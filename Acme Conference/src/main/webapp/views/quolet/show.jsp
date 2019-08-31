@@ -6,10 +6,22 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <security:authorize access="hasRole('ADMIN')">
 <b><spring:message code="quolet.ticker" /> : </b> <jstl:out value="${quolet.ticker}"></jstl:out> <br/>
-<b><spring:message code="quolet.publicationMoment" /> : </b> <jstl:out value="${quolet.publicationMoment}"></jstl:out> <br/>
+<jstl:if test="${lang eq 'es' }">
+	<b><spring:message code="quolet.publicationMoment" />:</b>
+		<fmt:formatDate value="${quolet.publicationMoment}" pattern="dd-MM-yy HH:mm" />
+		<br />
+	</jstl:if>
+	
+	<jstl:if test="${lang eq 'en' }">
+	<b><spring:message code="quolet.publicationMoment" />:</b>
+		<fmt:formatDate value="${quolet.publicationMoment}" pattern="yy/MM/dd HH:mm" />
+		<br />
+	</jstl:if>
+
 <b><spring:message code="quolet.body" /> : </b> <jstl:out value="${quolet.body}"></jstl:out> <br/>
 <b><spring:message code="quolet.picture" /> : </b> <br/> <img width="150" height="150" src="${quolet.picture}"> <br/>
 <b><spring:message code="quolet.xxxx" /> : </b> <jstl:out value="${quolet.xxxx}"></jstl:out> <br/>

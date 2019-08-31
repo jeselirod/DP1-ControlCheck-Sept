@@ -19,7 +19,17 @@ requestURI="quolet/administrator/list.do" >
 
 
 <display:column property="ticker" titleKey="quolet.ticker" />
-<display:column property="publicationMoment" titleKey="quolet.publicationMoment" />
+
+<jstl:choose>
+	<jstl:when test="${lang eq 'en'}">
+		<display:column class="${css}" property="publicationMoment" titleKey="quolet.publicationMoment" format="{0,date,yy/MM/dd hh:mm}"  />
+	</jstl:when>
+		
+	<jstl:otherwise>
+		<display:column class="${css}" property="publicationMoment" titleKey="quolet.publicationMoment" format="{0,date,dd-MM-yy hh:mm}"  />
+	</jstl:otherwise>
+</jstl:choose>
+
 <display:column property="body" titleKey="quolet.body" />
 <display:column property="conference.title" titleKey="quolet.conference" />
 
@@ -29,6 +39,7 @@ requestURI="quolet/administrator/list.do" >
 <display:column property="xxxx" titleKey="quolet.xxxx" />
 </display:table>
 
-
+<input type="button" name="create" value="<spring:message code="quolet.create" />"
+			onclick="javascript: relativeRedir('quolet/administrator/create.do');" />	
 
 </security:authorize>

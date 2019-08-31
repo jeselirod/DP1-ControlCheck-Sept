@@ -72,9 +72,6 @@ requestURI="conference/administrator/list.do" >
 			onclick="javascript: relativeRedir('conference/administrator/create.do');" />
 </security:authorize>
 
-<input type="button" name="create" value="<spring:message code="conference.quolet.create" />"
-			onclick="javascript: relativeRedir('quolet/administrator/create.do');" />	
-
 <security:authorize access="isAnonymous()">
 
 		<form:form action="conference/search.do" modelAttribute="finder">
