@@ -5,17 +5,21 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import security.LoginService;
 import security.UserAccount;
 import services.ActorService;
+import services.AdministratorService;
 import services.ConferenceService;
 import services.QuoletService;
 import domain.Actor;
+import domain.Administrator;
 import domain.Conference;
 import domain.Quolet;
 
@@ -24,14 +28,52 @@ import domain.Quolet;
 public class QuoletAdministratorController {
 
 	@Autowired
-	private QuoletService		quoletService;
+	private QuoletService			quoletService;
 
 	@Autowired
-	private ConferenceService	conferenceService;
+	private ConferenceService		conferenceService;
 
 	@Autowired
-	private ActorService		actorService;
+	private ActorService			actorService;
 
+	@Autowired
+	private AdministratorService	administratorService;
+
+
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public ModelAndView list() {
+		ModelAndView result;
+		try {
+			final UserAccount user = LoginService.getPrincipal();
+			final Administrator admin = this.administratorService.getAdministratorByUserAccount(user.getId());
+			final Collection<Quolet> quolets = this.quoletService.getQuoletsByAdmin(admin.getId());
+			result = new ModelAndView("quolet/list");
+
+			result.addObject("quolets", quolets);
+			return result;
+		} catch (final Exception e) {
+			result = new ModelAndView("redirect:../../");
+		}
+		return result;
+	}
+
+	@RequestMapping(value = "/show", method = RequestMethod.GET)
+	public ModelAndView showQuolet(@RequestParam final Integer quoletId) {
+		ModelAndView result;
+		try {
+			final Quolet quolet = this.quoletService.findOne(quoletId);
+			final Conference conference = this.conferenceService.findOne(quolet.getConference().getId());
+			Assert.notNull(conference);
+			Assert.notNull(quolet);
+
+			result = new ModelAndView("quolet/show");
+			result.addObject("quolet", quolet);
+			result.addObject("conference", conference);
+		} catch (final Exception e) {
+			result = new ModelAndView("redirect:list.do");
+		}
+		return result;
+	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {

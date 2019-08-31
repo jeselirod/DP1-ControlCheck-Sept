@@ -26,11 +26,13 @@ import domain.Quolet;
 public class QuoletService {
 
 	@Autowired
-	private QuoletRepository	quoletRepository;
+	private QuoletRepository		quoletRepository;
 	@Autowired
-	private ActorService		actorService;
+	private ActorService			actorService;
 	@Autowired
-	private Validator			validator;
+	private Validator				validator;
+	@Autowired
+	private AdministratorService	administratorService;
 
 
 	public Quolet create() {
@@ -54,7 +56,16 @@ public class QuoletService {
 	}
 
 	public Quolet findOne(final Integer id) {
+		final Quolet quolet = this.quoletRepository.findOne(id);
+		final UserAccount user = LoginService.getPrincipal();
+		final Administrator admin = this.administratorService.getAdministratorByUserAccount(user.getId());
+		Assert.isTrue(quolet.getAdmin().equals(admin));
+		Assert.isTrue(user.getAuthorities().iterator().next().getAuthority().equals("ADMIN"));
 		return this.quoletRepository.findOne(id);
+	}
+
+	public Collection<Quolet> getQuoletsByAdmin(final Integer adminId) {
+		return this.quoletRepository.getQuoletsByAdmin(adminId);
 	}
 
 	public Quolet save(final Quolet q) {

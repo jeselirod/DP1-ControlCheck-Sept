@@ -25,6 +25,8 @@
 		<put-attribute name="title" value="Lista de informes" />
 		<put-attribute name="body" value="/views/report/list.jsp" />
 	</definition>
+	
+	
 
 	
 </tiles-definitions>

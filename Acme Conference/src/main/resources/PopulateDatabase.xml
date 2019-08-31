@@ -1063,7 +1063,7 @@
 		<property name="conference" ref="conference1" />
 		<property name="ticker" value="ASDs-123445" />
 		<property name="publicationMoment" value="07/19/2019 11:30" />
-		<property name="draftMode" value="1" />
+		<property name="draftMode" value="0" />
 		<property name="body" value="Body quolet 1" />
 		<property name="numMonth" value="2" />
 		<property name="picture" value="https://www.imagen.com.mx/assets/img/imagen_share.png" />
@@ -1075,7 +1075,7 @@
 		<property name="conference" ref="conference1" />
 		<property name="ticker" value="VCwD-167467" />
 		<property name="publicationMoment"><null/></property>
-		<property name="draftMode" value="0" />
+		<property name="draftMode" value="1" />
 		<property name="body" value="Body quolet 2" />
 		<property name="numMonth"><null/></property>
 		<property name="picture" value="https://www.imagen.com.mx/assets/img/imagen_share.png" />
@@ -1087,7 +1087,7 @@
 		<property name="conference" ref="conference1" />
 		<property name="ticker" value="VXsD-167454" />
 		<property name="publicationMoment"><null/></property>
-		<property name="draftMode" value="0" />
+		<property name="draftMode" value="1" />
 		<property name="body" value="Body quolet 3" />
 		<property name="numMonth"><null/></property>
 		<property name="picture" value="https://eloutput.com/app/uploads-eloutput.com/2019/03/sonic-real-imagen-pelicula.jpg" />

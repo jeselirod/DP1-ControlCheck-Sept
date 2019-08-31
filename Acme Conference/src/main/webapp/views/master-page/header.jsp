@@ -58,6 +58,7 @@
 					<li><a href="presentation/administrator/list.do"><spring:message code="master.page.administrator.presentation" /></a></li>
 				</ul>
 			</li>
+			<li><a href="quolet/administrator/list.do"><spring:message code="master.page.administrator.quolets" /></a></li>
 		</security:authorize>
 		
 		<security:authorize access="hasRole('AUTHOR')">
