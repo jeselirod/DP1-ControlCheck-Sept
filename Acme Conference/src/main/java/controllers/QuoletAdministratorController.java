@@ -51,6 +51,8 @@ public class QuoletAdministratorController {
 
 			final String lang = LocaleContextHolder.getLocale().getLanguage();
 
+			this.quoletService.updateMonths();
+
 			result = new ModelAndView("quolet/list");
 			result.addObject("quolets", quolets);
 			result.addObject("lang", lang);

@@ -1,9 +1,11 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -113,7 +115,7 @@ public class QuoletService {
 
 			if (res.getDraftMode() == 0) {
 				res.setPublicationMoment(this.fechaPasado());
-				res.setNumMonth(this.getMonths(res));
+				res.setNumMonth(QuoletService.getMonths(res));
 			}
 			/*
 			 * if (res.getConference().getFinalMode() == 0 || !(res.getConference().getAdmin().equals(admin)))
@@ -136,7 +138,7 @@ public class QuoletService {
 
 			if (res.getDraftMode() == 0) {
 				copy.setPublicationMoment(this.fechaPasado());
-				copy.setNumMonth(this.getMonths(res));
+				copy.setNumMonth(QuoletService.getMonths(res));
 			} else {
 				copy.setPublicationMoment(null);
 				copy.setNumMonth(null);
@@ -192,7 +194,7 @@ public class QuoletService {
 	}
 
 	//Calcula los meses de diferencia de un quolet publicado
-	public Integer getMonths(final Quolet quolet) {
+	public static Integer getMonths(final Quolet quolet) {
 		Integer res = 0;
 
 		final Date dateCheck = quolet.getPublicationMoment();
@@ -202,5 +204,23 @@ public class QuoletService {
 		res = difA * 12 + actual.getMonth() - dateCheck.getMonth();
 
 		return res;
+	}
+
+	//METODO QUE ACTUALIZA LOS MESES DE LOS QuoletS QUE ESTAN EN SAVE MODE
+	public void updateMonths() {
+		List<Quolet> quolets = new ArrayList<>();
+
+		final UserAccount user = LoginService.getPrincipal();
+
+		Assert.isTrue(user.getAuthorities().iterator().next().getAuthority().equals("ADMIN"));
+		final Administrator a = (Administrator) this.actorService.getActorByUserAccount(user.getId());
+		quolets = (List<Quolet>) this.quoletRepository.getQuoletsByAdmin(a.getId());
+
+		for (int i = 0; i < quolets.size(); i++)
+			if (quolets.get(i).getDraftMode() == 0) {
+				final Integer months = QuoletService.getMonths(quolets.get(i));
+				quolets.get(i).setNumMonth(months);
+				this.quoletRepository.save(quolets.get(i));
+			}
 	}
 }
