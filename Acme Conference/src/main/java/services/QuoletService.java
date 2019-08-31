@@ -74,7 +74,7 @@ public class QuoletService {
 		//COMPROBAMOS QUE LA QUE ESTA EN BD ESTA EN DRAFT MODE
 		if (q.getId() != 0) {
 			final Quolet old = this.quoletRepository.findOne(q.getId());
-			Assert.isTrue(old.getDraftMode() == 0);
+			Assert.isTrue(old.getDraftMode() == 1);
 		}
 
 		//COMPROBAMOS QUE EL ACTOR LOGEADO ES UN ADMIN
@@ -89,7 +89,7 @@ public class QuoletService {
 	}
 
 	public void delete(final Quolet q) {
-		Assert.isTrue(q.getDraftMode() == 0);
+		Assert.isTrue(q.getDraftMode() == 1);
 		final UserAccount user = LoginService.getPrincipal();
 		final Actor a = this.actorService.getActorByUserAccount(user.getId());
 		Assert.isTrue(a.equals(q.getAdmin()));
@@ -102,34 +102,30 @@ public class QuoletService {
 		Quolet res;
 
 		final UserAccount user = LoginService.getPrincipal();
-		final Actor a = this.actorService.getActorByUserAccount(user.getId());
+		final Administrator admin = this.administratorService.getAdministratorByUserAccount(user.getId());
 
 		if (quolet.getId() == 0) {
 			res = quolet;
-
-			res.setAdmin((Administrator) a);
+			res.setAdmin(admin);
 			res.setTicker(this.generarTicker());
 			res.setPublicationMoment(null);
 			res.setNumMonth(null);
 
-			if (res.getDraftMode() == 1) {
+			if (res.getDraftMode() == 0) {
 				res.setPublicationMoment(this.fechaPasado());
 				res.setNumMonth(this.getMonths(res));
 			}
-
-			if (res.getConference().getFinalMode() == 0 || !(res.getConference().getAdmin().equals(a)))
-				binding.rejectValue("conference", "ConferenceNoValid");
-
+			/*
+			 * if (res.getConference().getFinalMode() == 0 || !(res.getConference().getAdmin().equals(admin)))
+			 * binding.rejectValue("conference", "ConferenceNoValid");
+			 */
 			this.validator.validate(res, binding);
-			return res;
-
 		} else {
 			res = this.quoletRepository.findOne(quolet.getId());
 			final Quolet copy = new Quolet();
-
+			copy.setId(res.getId());
+			copy.setVersion(res.getVersion());
 			copy.setTicker(res.getTicker());
-			copy.setPublicationMoment(res.getPublicationMoment());
-			copy.setNumMonth(quolet.getNumMonth());
 			copy.setAdmin(res.getAdmin());
 
 			copy.setConference(quolet.getConference());
@@ -138,19 +134,21 @@ public class QuoletService {
 			copy.setPicture(quolet.getPicture());
 			copy.setXxxx(quolet.getXxxx());
 
-			if (res.getDraftMode() == 1) {
-				res.setPublicationMoment(this.fechaPasado());
-				res.setNumMonth(this.getMonths(res));
+			if (res.getDraftMode() == 0) {
+				copy.setPublicationMoment(this.fechaPasado());
+				copy.setNumMonth(this.getMonths(res));
+			} else {
+				copy.setPublicationMoment(null);
+				copy.setNumMonth(null);
 			}
-
-			if (res.getConference().getFinalMode() == 0 || !(res.getConference().getAdmin().equals(a)))
-				binding.rejectValue("conference", "ConferenceNoValid");
-
+			/*
+			 * if (res.getConference().getFinalMode() == 0 || !(res.getConference().getAdmin().equals(admin)))
+			 * binding.rejectValue("conference", "ConferenceNoValid");
+			 */
 			this.validator.validate(copy, binding);
-
-			return copy;
+			res = copy;
 		}
-
+		return res;
 	}
 
 	//METODOS AUXILIARES

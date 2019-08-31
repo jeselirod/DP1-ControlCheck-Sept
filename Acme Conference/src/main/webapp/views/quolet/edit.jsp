@@ -21,10 +21,11 @@
 <security:authorize access="hasRole('ADMIN')">
 	<form:form action="quolet/administrator/edit.do" modelAttribute="quolet">
 	
+	<!-- 
 		<jstl:if test="${not empty exception}">
 			<p style="color:red"> <spring:message code="quolet.error" /> </p>
 		</jstl:if>
-	
+	-->
 		<form:hidden path="id"/>
 		<form:hidden path="version"/>
 		
@@ -34,19 +35,19 @@
 		<acme:textbox code="quolet.xxxx" path="xxxx"/>
 		<form:label path="draftMode"><spring:message code="quolet.draftMode" />:</form:label>
 		<form:select path="draftMode">
-			<form:option value="0" label="Draft mode" />	
-			<form:option value="1" label="Save mode" />		
+			<form:option value="1" label="Draft mode" />	
+			<form:option value="0" label="Save mode" />		
 		</form:select>
 	<form:errors path="draftMode"/>
 		
 		<br/>
-		<input type="submit" name="save" 
-		value="<spring:message code="quolet.save" />" />
-
-	<jstl:if test="${quolet.id eq 0 }">
+		
+		<input type="submit" name="save" value="<spring:message code="quolet.save" />" />
 		<input type="button" name="cancel" value="<spring:message code="quolet.cancel" />"
 				onclick="javascript: relativeRedir('quolet/administrator/list.do');" />
-	</jstl:if>
+		<jstl:if test="${quolet.id ne 0 }">	
+			<input type="submit" name="delete" value="<spring:message code="quolet.delete" />" />
+		</jstl:if>
 	</form:form>	
 	
 </security:authorize>

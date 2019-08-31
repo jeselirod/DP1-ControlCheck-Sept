@@ -37,7 +37,15 @@ requestURI="quolet/administrator/list.do" >
 	<img width="80" height="80" src="${row.picture}">
 </display:column>
 <display:column property="xxxx" titleKey="quolet.xxxx" />
+
+
+<display:column>
+	<jstl:if test="${row.draftMode eq 1}">
+		<a href="quolet/administrator/edit.do?quoletId=${row.id}"><spring:message code="quolet.edit" /></a>
+	</jstl:if>
+</display:column>
 </display:table>
+
 
 <input type="button" name="create" value="<spring:message code="quolet.create" />"
 			onclick="javascript: relativeRedir('quolet/administrator/create.do');" />	

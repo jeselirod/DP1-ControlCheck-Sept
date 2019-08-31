@@ -98,6 +98,26 @@ public class QuoletAdministratorController {
 		return result;
 	}
 
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public ModelAndView edit(@RequestParam final Integer quoletId) {
+		ModelAndView result;
+		try {
+			final Quolet quolet = this.quoletService.findOne(quoletId);
+			final UserAccount user = LoginService.getPrincipal();
+			final Administrator admin = this.administratorService.getAdministratorByUserAccount(user.getId());
+
+			final Collection<Conference> conferences = this.conferenceService.getConferecesInFinalModeByAdmin(admin.getId());
+			Assert.notNull(quolet);
+			Assert.notNull(conferences);
+			result = new ModelAndView("quolet/edit");
+			result.addObject("quolet", quolet);
+			result.addObject("conferences", conferences);
+		} catch (final Exception e) {
+			result = new ModelAndView("redirect:../../");
+		}
+		return result;
+	}
+
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView edit(final Quolet quolet, final BindingResult binding) {
 
@@ -106,6 +126,34 @@ public class QuoletAdministratorController {
 			final Quolet q = this.quoletService.reconstruct(quolet, binding);
 			if (!binding.hasErrors()) {
 				this.quoletService.save(q);
+				result = new ModelAndView("redirect:list.do");
+			} else {
+				final UserAccount user = LoginService.getPrincipal();
+				final Actor a = this.actorService.getActorByUserAccount(user.getId());
+				final Collection<Conference> conferences = this.conferenceService.getConferecesInFinalModeByAdmin(a.getId());
+				result = new ModelAndView("quolet/edit");
+				result.addObject("quolet", quolet);
+				result.addObject("conferences", conferences);
+			}
+		} catch (final Exception e) {
+			final UserAccount user = LoginService.getPrincipal();
+			final Actor a = this.actorService.getActorByUserAccount(user.getId());
+			final Collection<Conference> conferences = this.conferenceService.getConferecesInFinalModeByAdmin(a.getId());
+			result = new ModelAndView("quolet/edit");
+			result.addObject("quolet", quolet);
+			result.addObject("conferences", conferences);
+			result.addObject("exception", e);
+		}
+		return result;
+	}
+
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
+	public ModelAndView delete(final Quolet quolet, final BindingResult binding) {
+		ModelAndView result;
+		try {
+			final Quolet q = this.quoletService.reconstruct(quolet, binding);
+			if (!binding.hasErrors()) {
+				this.quoletService.delete(q);
 				result = new ModelAndView("redirect:list.do");
 			} else {
 				final UserAccount user = LoginService.getPrincipal();
