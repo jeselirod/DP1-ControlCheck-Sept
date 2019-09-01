@@ -31,7 +31,7 @@ requestURI="quolet/administrator/list.do" >
 </display:column>
 <jstl:if test="${row.numMonth ne null }">
 <jstl:choose>
-		<jstl:when test="${row.numMonth < 1}">
+		<jstl:when test="${row.numMonth < 1 }">
 			<jstl:set var="css" value="LESS_1_MONTH"></jstl:set>
 		</jstl:when>
 	
