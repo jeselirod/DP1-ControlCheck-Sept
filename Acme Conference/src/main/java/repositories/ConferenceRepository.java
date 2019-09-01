@@ -66,8 +66,8 @@ public interface ConferenceRepository extends JpaRepository<Conference, Integer>
 	@Query("select c from Conference c where c.finalMode = 0")
 	public Collection<Conference> getConferencesInDraftMode();
 
-	@Query("select c from Conference c where curdate() < c.startDate and c.finalMode=1")
-	public Collection<Conference> getFutureAndFinalModeConferences();
+	@Query("select c from Conference c where curdate() < c.startDate and c.finalMode=1 and c.admin.id = ?1")
+	public Collection<Conference> getFutureAndFinalModeConferences(int adminId);
 
 	//ControlCheck
 	@Query("select c from Conference c where c.admin.id = ?1 and c.finalMode=1")
