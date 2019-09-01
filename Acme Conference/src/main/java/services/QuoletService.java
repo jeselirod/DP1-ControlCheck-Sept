@@ -140,8 +140,8 @@ public class QuoletService {
 				copy.setNumMonth(null);
 			}
 
-			if (res.getConference() != null)
-				if (res.getConference().getFinalMode() == 0 || !(res.getConference().getAdmin().equals(admin)))
+			if (copy.getConference() != null)
+				if (copy.getConference().getFinalMode() == 0 || !(copy.getConference().getAdmin().equals(admin)))
 					binding.rejectValue("conference", "ConferenceNoValid");
 
 			this.validator.validate(copy, binding);

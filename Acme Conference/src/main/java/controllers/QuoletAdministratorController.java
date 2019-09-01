@@ -109,6 +109,7 @@ public class QuoletAdministratorController {
 			final Administrator admin = this.administratorService.getAdministratorByUserAccount(user.getId());
 
 			Assert.isTrue(quolet.getDraftMode() == 1);
+			Assert.isTrue(quolet.getAdmin().equals(admin));
 
 			final Collection<Conference> conferences = this.conferenceService.getConferecesInFinalModeByAdmin(admin.getId());
 			Assert.notNull(quolet);
