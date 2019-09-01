@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import services.AdministratorService;
 import services.ConferenceService;
 import services.CustomizableSystemService;
+import services.QuoletService;
 import domain.Administrator;
 import forms.RegistrationFormAdmin;
 
@@ -39,6 +40,9 @@ public class AdministratorController extends AbstractController {
 	@Autowired
 	private CustomizableSystemService	customizableService;
 
+	@Autowired
+	private QuoletService				quoletService;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -49,6 +53,13 @@ public class AdministratorController extends AbstractController {
 	@RequestMapping("/dashboard")
 	public ModelAndView dashboard() {
 		final ModelAndView result;
+
+		final List<Object[]> getAvgDesvQuoletsByConference = this.quoletService.getAvgDesvNumberQuoletsByConference();
+		final Double getAvgQuoletsByConference = (Double) getAvgDesvQuoletsByConference.get(0)[0];
+		final Double getDesvQuoletsByConference = (Double) getAvgDesvQuoletsByConference.get(0)[1];
+
+		final Double ratioInDraftMode = this.quoletService.RatioInDraftMode();
+		final Double ratioOutDraftMode = this.quoletService.RatioOutDraftMode();
 
 		final List<Object[]> getAvgMinMaxDesvSubmissionsByConference = this.conferenceService.getAvgMinMaxDesvSubmissionsByConference();
 		final Double getAvgSubmissionsByConference = (Double) getAvgMinMaxDesvSubmissionsByConference.get(0)[0];
@@ -76,6 +87,12 @@ public class AdministratorController extends AbstractController {
 
 		result = new ModelAndView("administrator/dashboard");
 
+		result.addObject("getAvgQuoletsByConference", getAvgQuoletsByConference);
+		result.addObject("getDesvQuoletsByConference", getDesvQuoletsByConference);
+
+		result.addObject("ratioInDraftMode", ratioInDraftMode);
+		result.addObject("ratioOutDraftMode", ratioOutDraftMode);
+
 		result.addObject("getAvgSubmissionsByConference", getAvgSubmissionsByConference);
 		result.addObject("getMinSubmissionsByConference", getMinSubmissionsByConference);
 		result.addObject("getMaxSubmissionsByConference", getMaxSubmissionsByConference);
@@ -98,7 +115,6 @@ public class AdministratorController extends AbstractController {
 
 		return result;
 	}
-
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView createForm() {
 		ModelAndView result;

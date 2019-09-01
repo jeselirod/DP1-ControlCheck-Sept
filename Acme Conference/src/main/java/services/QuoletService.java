@@ -220,4 +220,29 @@ public class QuoletService {
 				this.quoletRepository.save(quolets.get(i));
 			}
 	}
+
+	//Dashboard
+	public List<Object[]> getAvgDesvNumberQuoletsByConference() {
+		return this.quoletRepository.getAvgDesvNumberQuoletsByConference();
+	}
+
+	public List<Object[]> getAvgDesvNumberQuoletsByAdministrator() {
+		return this.quoletRepository.getAvgDesvNumberQuoletsByAdministrator();
+	}
+
+	public Double RatioInDraftMode() {
+		return this.quoletRepository.RatioInDraftMode();
+	}
+
+	public Double RatioOutDraftMode() {
+		return this.quoletRepository.RatioOutDraftMode();
+	}
+
+	public Double RatioNoPublicate() {
+		return this.quoletRepository.RatioNoPublicate();
+	}
+
+	public Double RatioPublicate() {
+		return this.quoletRepository.RatioPublicate();
+	}
 }

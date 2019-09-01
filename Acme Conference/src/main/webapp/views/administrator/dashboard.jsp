@@ -20,6 +20,18 @@
 <security:authorize access="hasRole('ADMIN')">
 
 <fieldset>
+<legend><spring:message code="administrator.quolet.conference" /></legend>
+<b><spring:message code="administrator.avg" /></b>: <jstl:out value="${getAvgQuoletsByConference}"></jstl:out><br/>
+<b><spring:message code="administrator.desv" /></b>: <fmt:formatNumber type="number" maxIntegerDigits = "3" value ="${getDesvQuoletsByConference}"></fmt:formatNumber><br/>
+</fieldset>
+
+<fieldset>
+<legend><spring:message code="administrator.quolet.ratio" /></legend>
+<b><spring:message code="administrator.ratio.draftMode" /></b>: <jstl:out value="${ratioInDraftMode}"></jstl:out><br/>
+<b><spring:message code="administrator.ratio.finalMode" /></b>: <jstl:out value="${ratioOutDraftMode}"></jstl:out><br/>
+</fieldset>
+
+<fieldset>
 <legend><spring:message code="administrator.submission.conference" /></legend>
 <b><spring:message code="administrator.avg" /></b>: <jstl:out value="${getAvgSubmissionsByConference}"></jstl:out><br/>
 <b><spring:message code="administrator.min" /></b>: <jstl:out value="${getMinSubmissionsByConference}"></jstl:out><br/>
