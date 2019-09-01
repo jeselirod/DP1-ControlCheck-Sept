@@ -21,11 +21,11 @@
 <security:authorize access="hasRole('ADMIN')">
 	<form:form action="quolet/administrator/edit.do" modelAttribute="quolet">
 	
-	<!-- 
+
 		<jstl:if test="${not empty exception}">
 			<p style="color:red"> <spring:message code="quolet.error" /> </p>
 		</jstl:if>
-	-->
+
 		<form:hidden path="id"/>
 		<form:hidden path="version"/>
 		
