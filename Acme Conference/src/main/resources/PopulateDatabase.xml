@@ -1097,7 +1097,7 @@
 	</bean>
 	
 	<bean id="quolet4" class="domain.Quolet">
-		<property name="conference" ref="conference2" />
+		<property name="conference" ref="conference4" />
 		<property name="ticker" value="VXTT-167443" />
 		<property name="publicationMoment" value="04/21/2019 11:30" />
 		<property name="draftMode" value="0" />
@@ -1105,7 +1105,7 @@
 		<property name="numMonth" value="5" />
 		<property name="picture" value="https://eloutput.com/app/uploads-eloutput.com/2019/03/sonic-real-imagen-pelicula.jpg" />
 		<property name="xxxx" value="xxxx4" />
-		<property name="admin" ref="administrator2" />
+		<property name="admin" ref="administrator1" />
 		
 	</bean>
 
