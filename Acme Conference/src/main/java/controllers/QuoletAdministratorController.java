@@ -56,7 +56,7 @@ public class QuoletAdministratorController {
 			result = new ModelAndView("quolet/list");
 			result.addObject("quolets", quolets);
 			result.addObject("lang", lang);
-			return result;
+
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:../../");
 		}

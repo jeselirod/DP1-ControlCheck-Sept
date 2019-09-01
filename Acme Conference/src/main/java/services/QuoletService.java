@@ -132,9 +132,9 @@ public class QuoletService {
 			copy.setPicture(quolet.getPicture());
 			copy.setXxxx(quolet.getXxxx());
 
-			if (res.getDraftMode() == 0) {
+			if (quolet.getDraftMode() == 0) {
 				copy.setPublicationMoment(this.fechaPasado());
-				copy.setNumMonth(QuoletService.getMonths(res));
+				copy.setNumMonth(QuoletService.getMonths(copy));
 			} else {
 				copy.setPublicationMoment(null);
 				copy.setNumMonth(null);
