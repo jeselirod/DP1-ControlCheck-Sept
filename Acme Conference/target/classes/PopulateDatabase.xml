@@ -717,7 +717,7 @@
 		<property name="summary" value="summary conference 4" />
 		<property name="fee" value="9.0" />
 		<property name="finalMode" value="1" />
-		<property name="admin" ref="administrator1" />
+		<property name="admin" ref="administrator2" />
 	</bean>
 	<bean id="conference5" class="domain.Conference">
 		<property name="title" value="title conference 5" />
@@ -1062,10 +1062,10 @@
 	<bean id="quolet1TEST" class="domain.Quolet">
 		<property name="conference" ref="conference1" />
 		<property name="ticker" value="ASDs-123445" />
-		<property name="publicationMoment" value="08/31/2019 11:30" />
+		<property name="publicationMoment" value="09/01/2019 11:30" />
 		<property name="draftMode" value="0" />
 		<property name="body" value="Body quolet 1" />
-		<property name="numMonth" value="1" />
+		<property name="numMonth" value="0" />
 		<property name="picture" value="https://www.imagen.com.mx/assets/img/imagen_share.png" />
 		<property name="xxxx" value="xxxx1" />
 		<property name="admin" ref="administrator1" />
@@ -1074,8 +1074,8 @@
 	<bean id="quolet2TEST" class="domain.Quolet">
 		<property name="conference" ref="conference1" />
 		<property name="ticker" value="VCwD-167467" />
-		<property name="publicationMoment" value="07/31/2019 11:30"/>
-		<property name="draftMode" value="1" />
+		<property name="publicationMoment" value="08/31/2019 11:30"/>
+		<property name="draftMode" value="0" />
 		<property name="body" value="Body quolet 2" />
 		<property name="numMonth" value="2" />
 		<property name="picture" value="https://www.imagen.com.mx/assets/img/imagen_share.png" />
@@ -1086,13 +1086,13 @@
 	<bean id="quolet3TEST" class="domain.Quolet">
 		<property name="conference" ref="conference1" />
 		<property name="ticker" value="VXsD-167454" />
-		<property name="publicationMoment" value="01/20/2019 11:30"/>
+		<property name="publicationMoment"><null/></property>
 		<property name="draftMode" value="1" />
 		<property name="body" value="Body quolet 3" />
-		<property name="numMonth" value="9" />
+		<property name="numMonth"><null/></property>
 		<property name="picture" value="https://eloutput.com/app/uploads-eloutput.com/2019/03/sonic-real-imagen-pelicula.jpg" />
 		<property name="xxxx" value="xxxx3" />
-		<property name="admin" ref="administrator2" />
+		<property name="admin" ref="administrator1" />
 		
 	</bean>
 	
@@ -1105,6 +1105,19 @@
 		<property name="numMonth" value="9" />
 		<property name="picture" value="https://eloutput.com/app/uploads-eloutput.com/2019/03/sonic-real-imagen-pelicula.jpg" />
 		<property name="xxxx" value="xxxx4" />
+		<property name="admin" ref="administrator2" />
+		
+	</bean>
+	
+	<bean id="quolet5TEST" class="domain.Quolet">
+		<property name="conference" ref="conference4" />
+		<property name="ticker" value="VYTT-167443" />
+		<property name="publicationMoment" value="01/20/2019 11:30" />
+		<property name="draftMode" value="0" />
+		<property name="body" value="Body quolet 5" />
+		<property name="numMonth" value="9" />
+		<property name="picture" value="https://eloutput.com/app/uploads-eloutput.com/2019/03/sonic-real-imagen-pelicula.jpg" />
+		<property name="xxxx" value="xxxx5" />
 		<property name="admin" ref="administrator2" />
 		
 	</bean>
