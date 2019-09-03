@@ -72,6 +72,10 @@ public class QuoletAdministratorController {
 			Assert.notNull(conference);
 			Assert.notNull(quolet);
 
+			final UserAccount user = LoginService.getPrincipal();
+			final Actor a = this.actorService.getActorByUserAccount(user.getId());
+			Assert.isTrue(a.equals(quolet.getAdmin()));
+
 			final String lang = LocaleContextHolder.getLocale().getLanguage();
 
 			result = new ModelAndView("quolet/show");
